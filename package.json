@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "kafka-node": "^2.3.0",
     "node-rdkafka": "^2.2.1"
+  },
+  "engines": {
+    "node": ">= 10.4.0",
+    "npm": ">= 6.1.0"
   }
 }

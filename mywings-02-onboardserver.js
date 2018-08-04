@@ -6,7 +6,7 @@ var producer = new Kafka.Producer({
   'dr_cb': true  //delivery report callback
 });
 
-var topicName = 'node-test';
+var topicName = 'mywings-02';
 
 //logging debug messages, if debug is enabled
 producer.on('event.log', function(log) {
@@ -33,7 +33,7 @@ producer.on('ready', function(arg) {
   console.log('producer ready.' + JSON.stringify(arg));
 
   for (var i = 0; i < maxMessages; i++) {
-    var value = new Buffer('value-' +i);
+    var value = new Buffer.from(topicName + '-log: ' + i + '\n');
     var key = "key-"+i;
     // if partition is set to -1, librdkafka will use the default partitioner
     var partition = -1;
@@ -57,3 +57,4 @@ producer.on('disconnected', function(arg) {
 
 //starting the producer
 producer.connect();
+
