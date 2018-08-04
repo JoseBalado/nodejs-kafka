@@ -30,3 +30,28 @@ Read TV Shows
 
 ### The first two messages are listed while the prompt remains open
 
+# Install Kafka with Docker
+https://github.com/wurstmeister/kafka-docker
+
+# Install rdkfafka Linux
+sudo apt-get install libssl-dev
+
+# Starting Zookeeper and one Kafka Broker
+docker-compose -f docker-compose-single-broker.yml up -d
+
+
+# Starting Zookeeper and three Kafka Broker
+## Investigate the proper configuration of docker-compose.yml to allow connection to a cluster of Kafka brokers
+docker-compose up -d zookeeper  
+docker-compose up --scale kafka=3
+
+
+# Enter in a container:
+./start-kafka-shell.sh
+
+## Show Kafka commands inside the container
+kafka + tab, show all possible scripts
+
+## Folder where all Kafka commands are stored
+/opt/kafka/bin/
+
