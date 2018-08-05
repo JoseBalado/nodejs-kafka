@@ -1,57 +1,151 @@
-## [More documentation](https://bertrandszoghy.wordpress.com/2017/06/27/nodejs-querying-messages-in-apache-kafka/)
-
-### start Zookeeper
-./bin/zookeeper-server-start.sh ./config/zookeeper.properties
-
-### start Kafka broker
-./bin/kafka-server-start.sh ./config/server.properties
-
-### Create a topic
-./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic backoffice
-
-### List topics
-./bin/kafka-topics.sh --list --zookeeper localhost:2181
-
-
-## Produce and consume topics using the Kafka shell script
-### Create a new topic
-./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mytopic
-### Produce a message in the topic using the Kafka shell script
-./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic
-
-#### Then introduce two texts fro this message, separate both lines hitting enter
-Read clients  
-Read TV Shows
-
-#### Leave the prompt open
-
-### Consume the message in the topic using the Kafka shell script
-./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic mytopic --from-beginning
-
-### The first two messages are listed while the prompt remains open
-
-# Install Kafka with Docker
+# Prerequisites
+### Install Kafka with Docker
+```
 https://github.com/wurstmeister/kafka-docker
+```
 
-# Install rdkfafka Linux
+### node-rdkfafka for Linux depends on C/C++ rdkafka library that needs to be compiled. It has the following dependency
+```
 sudo apt-get install libssl-dev
+```
 
-# Starting Zookeeper and one Kafka Broker
-docker-compose -f docker-compose-single-broker.yml up -d
+## Initial set-up
+### The following command sets the variable HOST_IP to 172.17.0.1 and ZK to 172.17.0.1:2181. HOST_IP is the IP of the Docker container network. '2181' is the default port for Zookeeper
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
+
+### Show the value of the ZK variable
+```
+echo $ZK
+```
+
+### Now, inside this new running container, list all the topics
+```
+kafka-topics.sh --zookeeper $ZK --list
+```
+
+### Show a lits of brokers
+```
+broker-list.sh
+```
+
+### Inside the Docker container, create a topic
+```
+kafka-topics.sh --create --topic mytopic --partitions 4 --zookeeper $ZK --replication-factor 1
+```
+
+### Show information about the topic 'mytopic'
+```
+$KAFKA_HOME/bin/kafka-topics.sh --describe --topic mytopic --zookeeper $ZK
+```
+
+## Create a consumer
+### Launch a docker container where the consumer will be executed
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
+
+### Inside the Docker container
+```
+$KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=172.17.0.1:9092 --from-beginning
+```
+
+### Launch the producer, setting 'HOST_IP' and 'ZK' varibles
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
+
+## Create a producer
+```
+$KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=`broker-list.sh`
+```
+
+### Send messages writing after the prompt `>` and pressing enter. The consumer will print the message
+```
+> hello
+>
+```
 
 
-# Starting Zookeeper and three Kafka Broker
-## Investigate the proper configuration of docker-compose.yml to allow connection to a cluster of Kafka brokers
-docker-compose up -d zookeeper  
-docker-compose up --scale kafka=3
 
 
-# Enter in a container:
-./start-kafka-shell.sh
+# Starting a cluster with three Kafka nodes
+```
+docker-compose up -d zookeeper
+docker-compose up -d --scale kafka=3
+```
 
-## Show Kafka commands inside the container
-kafka + tab, show all possible scripts
+### The following command sets the variable HOST_IP to 172.17.0.1 and ZK to 172.17.0.1:2181. HOST_IP is the IP of the Docker container network. '2181' is the default port for Zookeeper
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
 
+### Inside the container, get a list of topics
+```
+kafka-topics.sh --zookeeper $ZK --list
+```
+
+### Show a lits of brokers. Note, if the script `start-kafka-shell.sh` is not passed the HOST_IP and ZK environment variables, only the ports are shown and this command will not work for consumer or producer: --bootstrap-server=\`broker-list.sh\`.
+```
+broker-list.sh
+```
+
+## Create a new topic
+### Inside the Docker container, create a topic called 'mytopic'
+```
+kafka-topics.sh --create --topic mytopic --partitions 4 --zookeeper $ZK --replication-factor 2
+```
+
+### Show information about the topic 'mytopic'
+```
+$KAFKA_HOME/bin/kafka-topics.sh --describe --topic mytopic --zookeeper $ZK
+```
+
+## Create a consumer when there are multiple brokers
+### Launch a docker container where the consumer will be executed
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
+
+### Inside the Docker container, show information about the topic 'mytopic'
+```
+$KAFKA_HOME/bin/kafka-topics.sh --describe --topic mytopic --zookeeper $ZK
+```
+
+### Launch a consumer
+```
+$KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=`broker-list.sh` --from-beginning
+```
+
+### or use the IP and Port of one the brokers shown by 'broker-list.sh' command pass directly the result of 'broker-list.sh'
+```
+$KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=172.17.0.1:32768 --from-beginning
+```
+
+## Create a producer
+### Start a docker container, setting 'HOST_IP' and 'ZK' varibles
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
+
+### Launch the producer
+```
+$KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=\`broker-list.sh\`
+```
+
+### Send messages writing after the prompt `>` and pressing enter. The consumer will print the message
+```
+> hello
+>
+```
+
+
+
+
+# Notes
 ## Folder where all Kafka commands are stored
+```
 /opt/kafka/bin/
+```
 

@@ -3,7 +3,8 @@ var Transform = require('stream').Transform;
 var Kafka = require('node-rdkafka');
 
 var stream = Kafka.KafkaConsumer.createReadStream({
-  'metadata.broker.list': 'localhost:9092',
+  // 'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
+  'metadata.broker.list': '172.17.0.1:32768',
   'group.id': 'librd-test',
   'socket.keepalive.enable': true,
   'enable.auto.commit': false
