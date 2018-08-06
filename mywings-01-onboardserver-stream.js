@@ -27,6 +27,10 @@ stream.producer.on('ready', (value1, value2) => {
       }
   })
   */
+  stream.producer.queryWatermarkOffsets('mywings-01', 0, 5000, (err, offsets) => {
+    console.log('err:', err)
+    console.log('offsets:', offsets)
+  });
 })
 
 const maxMessages = 10;
@@ -45,7 +49,3 @@ stream.on('delivery-report', function(err, report) {
   console.log('delivery-report: ', JSON.stringify(report));
 });
 
-//  stream.consumer.queryWatermarkOffsets('mywings-01', 0, 5000, function(err, offsets) {
-//    console.log('err:', err)
-//    console.log('offsets:', offsets)
-//  });
