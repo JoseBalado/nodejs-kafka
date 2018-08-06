@@ -5,7 +5,7 @@ var Kafka = require('node-rdkafka');
 var stream = Kafka.KafkaConsumer.createReadStream({
   // 'metadata.broker.list': '172.17.0.1:9092', // use when there is only one Kafka broker
   'debug': 'all',
-  'metadata.broker.list': '172.17.0.1:32768',
+  'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
   'group.id': 'librd-test',
   'socket.keepalive.enable': true,
   'enable.auto.commit': false

@@ -3,7 +3,7 @@ const Kafka = require('node-rdkafka');
 const stream = Kafka.Producer.createWriteStream({
   'debug' : 'all',
   // 'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
-  'metadata.broker.list': '172.17.0.1:32768',
+  'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
   'dr_cb': true
 }, {}, {
   topic: 'mywings-01'
