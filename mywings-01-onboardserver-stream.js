@@ -13,6 +13,20 @@ const topicName = 'mywings-01';
 
 stream.producer.on('ready', (value1, value2) => {
   console.log('Producer stream is ready:', value1, '\n', value2)
+  /* This is equivalent to the previous two lines
+  stream.producer.getMetadata({
+      topic: 'mywings-01',
+      timeout: 10000
+    }, function(err, metadata) {
+      if (err) {
+        console.error('Error getting metadata');
+        console.error(err);
+      } else {
+        console.log('Got metadata');
+        console.log(metadata);
+      }
+  })
+  */
 })
 
 const maxMessages = 10;

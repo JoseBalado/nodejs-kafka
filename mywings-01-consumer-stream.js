@@ -3,7 +3,7 @@ var Transform = require('stream').Transform;
 var Kafka = require('node-rdkafka');
 
 var stream = Kafka.KafkaConsumer.createReadStream({
-  // 'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
+  // 'metadata.broker.list': '172.17.0.1:9092', // use when there is only one Kafka broker
   'debug': 'all',
   'metadata.broker.list': '172.17.0.1:32768',
   'group.id': 'librd-test',
@@ -19,6 +19,20 @@ var stream = Kafka.KafkaConsumer.createReadStream({
 
 stream.consumer.on('ready', (value1, value2) => {
   console.log('Producer stream is ready:', value1, '\n', value2)
+  /* This is equivalent to the previous two lines
+  stream.consumer.getMetadata({
+      topic: 'mywings-01',
+      timeout: 10000
+    }, function(err, metadata) {
+      if (err) {
+        console.error('Error getting metadata');
+        console.error(err);
+      } else {
+        console.log('Got metadata');
+        console.log(metadata);
+      }
+  })
+  */
   stream.consumer.queryWatermarkOffsets('mywings-01', 0, 5000, (err, offsets) => {
     console.log('err:', err)
     console.log('offsets:', offsets)
