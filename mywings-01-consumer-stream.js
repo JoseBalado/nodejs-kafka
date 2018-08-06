@@ -3,14 +3,14 @@ var Transform = require('stream').Transform;
 var Kafka = require('node-rdkafka');
 
 var stream = Kafka.KafkaConsumer.createReadStream({
-  // 'metadata.broker.list': '172.17.0.1:9092', // use when there is only one Kafka broker
   'debug': 'all',
+  // 'metadata.broker.list': '172.17.0.1:9092', // use when there is only one Kafka broker
   'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
   'group.id': 'librd-test',
   'socket.keepalive.enable': true,
   'enable.auto.commit': false
 }, {
-//  'auto.offset.reset': 'earliest' // consume from the start
+  'auto.offset.reset': 'earliest' // consume from the start
 }, {
   topics: 'mywings-01',
   waitInterval: 0,
@@ -44,13 +44,15 @@ stream.on('error', function(err) {
   process.exit(1);
 });
 
-//stream
-//  .pipe(process.stdout);
-
-stream.on('data', function(data) {
+stream.on('data', data => {
   console.log('Got message')
-  console.log(data.toString());
-});
+  console.log(data.toString())
+})
+
+/* this is equivalent to `stream.on('data', data =>`
+  stream
+    .pipe(process.stdout);
+*/
 
 stream.consumer.on('event.error', function(err) {
   console.log('event.error', err);
