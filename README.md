@@ -9,6 +9,15 @@ https://github.com/wurstmeister/kafka-docker
 sudo apt-get install libssl-dev
 ```
 
+### Alternatively install it from the repository
+```
+sudo apt-get install librdkafka1 librdkafka-dev
+```
+
+### Get the latest version of librdkafka library
+[syslogng-kafka](http://syslogng-kafka.readthedocs.io/en/latest/installation_librdkafka.html)
+
+
 ## Initial set-up
 ### The following command sets the variable HOST_IP to 172.17.0.1 and ZK to 172.17.0.1:2181. HOST_IP is the IP of the Docker container network. '2181' is the default port for Zookeeper
 ```
