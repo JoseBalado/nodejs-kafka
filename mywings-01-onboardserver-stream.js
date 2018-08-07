@@ -32,21 +32,19 @@ stream.producer.on('ready', (value1, value2) => {
     console.log('offsets:', offsets)
   });
 
-  const maxMessages = 10;
-  for (var i = 0; i < maxMessages; i++) {
-    const value = new Buffer.from(`${topicName}-log: {"previousURL":"^","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-06-19T12:38:0${i}.TZ-2"}`);
-    stream.write(value);
-  }
 })
 
+const maxMessages = 10;
+for (var i = 0; i < maxMessages; i++) {
+  const value = new Buffer.from(`${topicName}-log: {"previousURL":"^","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-06-19T12:38:0${i}.TZ-2"}`);
+  stream.write(value);
+}
 
 stream.on('error', function (err) {
   // Here's where we'll know if something went wrong sending to Kafka
   console.error('Error in our kafka stream');
   console.error(err);
 })
-
-stream.producer.setPollInterval(100)
 
 // doesn't seem to work
 stream.on('delivery-report', function(err, report) {

@@ -1,5 +1,4 @@
 var Transform = require('stream').Transform;
-
 var Kafka = require('node-rdkafka');
 
 var stream = Kafka.KafkaConsumer.createReadStream({
