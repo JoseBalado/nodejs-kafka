@@ -1,21 +1,22 @@
-const Kafka = require('node-rdkafka');
+const Kafka = require('node-rdkafka')
+
+const topicName = 'mywings-01'
 
 const stream = Kafka.Producer.createWriteStream({
   'debug' : 'all',
-  // 'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
-  'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
+  //'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
+   'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
   'dr_cb': true  //delivery report callback, doesn't seem to work
 }, {}, {
-  topic: 'mywings-01'
+  topic: topicName
 });
 
-const topicName = 'mywings-01';
 
 stream.producer.on('ready', (value1, value2) => {
-  console.log('Producer stream is ready:', value1, '\n', value2)
+  console.log('Producer stream is ready:', value1, JSON.stringify(value2, null, '\t'))
   /* This is equivalent to the previous two lines
   stream.producer.getMetadata({
-      topic: 'mywings-01',
+      topic: topicName,
       timeout: 10000
     }, function(err, metadata) {
       if (err) {
@@ -27,11 +28,13 @@ stream.producer.on('ready', (value1, value2) => {
       }
   })
   */
-  stream.producer.queryWatermarkOffsets('mywings-01', 0, 5000, (err, offsets) => {
-    console.log('err:', err)
-    console.log('offsets:', offsets)
-  });
-
+  stream.producer.queryWatermarkOffsets(topicName, 0, 5000, (err, offsets) => {
+    if(err) {
+      console.log('err:', err)
+    } else {
+      console.log('offsets for', topicName, ':', offsets)
+    }
+  })
 })
 
 const maxMessages = 10;

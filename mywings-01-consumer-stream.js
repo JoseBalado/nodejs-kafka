@@ -1,26 +1,29 @@
-var Transform = require('stream').Transform;
-var Kafka = require('node-rdkafka');
+const Kafka = require('node-rdkafka')
+const Transform = require('stream').Transform
+
+
+const topicName = 'mywings-01'
 
 var stream = Kafka.KafkaConsumer.createReadStream({
   'debug': 'all',
   // 'metadata.broker.list': '172.17.0.1:9092', // use when there is only one Kafka broker
-  'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
-  'group.id': 'librd-test',
+   'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
+  'group.id': 'consumer-group',
   'socket.keepalive.enable': true,
   'enable.auto.commit': false
 }, {
   'auto.offset.reset': 'earliest' // consume from the start
 }, {
-  topics: 'mywings-01',
+  topics: [topicName],
   waitInterval: 0,
   objectMode: false
 });
 
 stream.consumer.on('ready', (value1, value2) => {
-  console.log('Producer stream is ready:', value1, '\n', value2)
+  console.log('Producer stream is ready:', value1, '\n', JSON.stringify(value2, null, '\t'))
   /* This is equivalent to the previous two lines
   stream.consumer.getMetadata({
-      topic: 'mywings-01',
+      topic: topicName,
       timeout: 10000
     }, function(err, metadata) {
       if (err) {
@@ -32,10 +35,13 @@ stream.consumer.on('ready', (value1, value2) => {
       }
   })
   */
-  stream.consumer.queryWatermarkOffsets('mywings-01', 0, 5000, (err, offsets) => {
-    console.log('err:', err)
-    console.log('offsets:', offsets)
-  });
+  stream.consumer.queryWatermarkOffsets(topicName, 0, 5000, (err, offsets) => {
+    if(err) {
+      console.log('err:', err)
+    } else {
+      console.log('offsets for', topicName, ':', offsets)
+    }
+  })
 })
 
 stream.on('error', function(err) {

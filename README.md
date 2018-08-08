@@ -19,6 +19,7 @@ sudo apt-get install librdkafka1 librdkafka-dev
 
 
 ## Initial set-up
+### In the docker-compose yml files substitute the IP in 'KAFKA_ADVERTISED_HOST_NAME' by the IP of your Docker interface
 ### The following command sets the variable HOST_IP to 172.17.0.1 and ZK to 172.17.0.1:2181. HOST_IP is the IP of the Docker container network. '2181' is the default port for Zookeeper
 ```
 ./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
