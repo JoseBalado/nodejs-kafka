@@ -86,7 +86,12 @@ docker-compose up -d zookeeper
 docker-compose up -d --scale kafka=3
 ```
 
-### The following command sets the variable HOST_IP to 172.17.0.1 and ZK to 172.17.0.1:2181. HOST_IP is the IP of the Docker container network. '2181' is the default port for Zookeeper
+### Alternatively this will start start one Zookeeper instance and and three Kafka brokers with these fixed ports: 172.17.0.1:32769,172.17.0.1:32770,172.17.0.1:32768
+```
+docker-compose -f docker-3brokers.yml up
+```
+
+### The following command sets the variable HOST_IP to 172.17.0.1 and ZK to 172.17.0.1:2181. HOST_IP must be set to the IP of the Docker container network. '2181' is the default port for Zookeeper
 ```
 ./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
 ```
