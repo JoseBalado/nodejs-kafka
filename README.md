@@ -86,7 +86,8 @@ docker-compose up -d zookeeper
 docker-compose up -d --scale kafka=3
 ```
 
-### Alternatively this will start start one Zookeeper instance and and three Kafka brokers with these fixed ports: 172.17.0.1:32769,172.17.0.1:32770,172.17.0.1:32768
+### Alternatively this will start start one Zookeeper instance and and three Kafka brokers with these fixed ports: 172.17.0.1:32769, 172.17.0.1:32770, 172.17.0.1:32768 
+### Read the docker file for more information about configuration options
 ```
 docker-compose -f docker-3brokers.yml up
 ```
@@ -161,6 +162,12 @@ $KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=\`broker
 # Notes
 ## Folder where all Kafka commands are stored
 ```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
 /opt/kafka/bin/
+```
+
+(https://stackoverflow.com/questions/39735036/make-kafka-topic-log-retention-permanent)
+```
+If you want to retain all topics forever, you can set both log.retention.hours and log.retention.bytes to -1.
 ```
 
