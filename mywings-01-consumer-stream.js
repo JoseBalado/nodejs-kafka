@@ -1,6 +1,4 @@
 const Kafka = require('node-rdkafka')
-const Transform = require('stream').Transform
-
 
 const topicName = 'mywings-01'
 
@@ -51,7 +49,7 @@ stream.on('error', function(err) {
 
 stream.on('data', data => {
   console.log('Got message')
-  console.log(data.toString())
+  console.log(`${topicName}:`, data.toString())
 })
 
 /* this is equivalent to `stream.on('data', data =>`
