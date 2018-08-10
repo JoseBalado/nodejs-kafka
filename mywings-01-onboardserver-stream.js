@@ -5,7 +5,7 @@ const topicName = 'mywings-01'
 const stream = Kafka.Producer.createWriteStream({
   'debug' : 'all',
   //'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
-   'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
+  'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
   'dr_cb': true  //delivery report callback, doesn't seem to work
 }, {}, {
   topic: topicName

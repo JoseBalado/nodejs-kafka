@@ -7,7 +7,7 @@ const topicName = 'mywings-01'
 var stream = Kafka.KafkaConsumer.createReadStream({
   'debug': 'all',
   // 'metadata.broker.list': '172.17.0.1:9092', // use when there is only one Kafka broker
-   'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
+  'metadata.broker.list': '172.17.0.1:32768,172.17.0.1:32769,172.17.0.1:32770',
   'group.id': 'consumer-group',
   'socket.keepalive.enable': true,
   'enable.auto.commit': false
