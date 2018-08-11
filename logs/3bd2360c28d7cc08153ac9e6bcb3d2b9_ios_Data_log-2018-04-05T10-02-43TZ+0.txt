@@ -1,0 +1,9 @@
+{"previousURL":"/map","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-04-05T10:08:51TZ-1"}
+{"previousURL":"/wireless","currentURL":"/map","currentParams":{"back":"wireless","title":"APPLICATION.INFLIGHT.MAP"},"timeStamp":"2018-04-05T10:23:02TZ-1"}
+{"previousURL":"/map","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-04-05T10:23:13TZ-1"}
+{"previousURL":"/wireless","currentURL":"/map","currentParams":{"back":"wireless","title":"APPLICATION.INFLIGHT.MAP"},"timeStamp":"2018-04-05T10:23:14TZ-1"}
+{"section":"/Audio","action":"Toggle Music Player","timeStamp":"2018-04-05T10:23:01TZ-1","isOpen":true}
+{"section":"/Audio","action":"Toggle Music Player","timeStamp":"2018-04-05T10:23:02TZ-1","isOpen":false}
+{"section":"/Map","action":"Navigate to map","timeStamp":"2018-04-05T10:23:03TZ-1"}
+{"section":"/Map","action":"Toggle Map Info Display","timeStamp":"2018-04-05T10:23:04TZ-1","isOpen":true}
+{"section":"/Map","action":"Navigate to map","timeStamp":"2018-04-05T10:23:15TZ-1"}
