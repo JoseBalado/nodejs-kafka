@@ -105,6 +105,11 @@ $KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=`broker-
 >
 ```
 
+### Delete a topic
+```
+kafka-topics.sh --zookeeper $ZK --delete  --topic mytopic
+```
+
 
 
 
