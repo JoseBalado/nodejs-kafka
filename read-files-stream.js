@@ -1,6 +1,6 @@
 const Kafka = require('node-rdkafka')
 
-const topicName = 'mywings-01'
+const topicName = 'log-files'
 
 const stream = Kafka.Producer.createWriteStream({
   'debug' : 'all',
@@ -40,13 +40,13 @@ stream.producer.on('ready', (value1, value2) => {
 const maxMessages = 10
 for (var i = 0; i < maxMessages; i++) {
   const value = new Buffer.from(`{"previousURL":"^","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-06-19T12:38:0${i}.TZ-2"}`)
-  stream.write(value);
+  stream.write(value)
 }
 
 stream.on('error', function (err) {
   // Here's where we'll know if something went wrong sending to Kafka
   console.error('Error in our kafka stream')
-  console.error(err)
+  console.error(err);
 })
 
 // doesn't seem to work
