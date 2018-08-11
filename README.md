@@ -60,6 +60,7 @@ kafka-topics.sh --zookeeper $ZK --list
 broker-list.sh
 ```
 
+
 ## Create a new topic
 ### Inside the Docker container, create a topic with a replication factor of 3, this needs at least 3 Kafka brokers
 ```
@@ -70,6 +71,23 @@ kafka-topics.sh --create --topic mytopic --partitions 4 --zookeeper $ZK --replic
 ```
 $KAFKA_HOME/bin/kafka-topics.sh --describe --topic mytopic --zookeeper $ZK
 ```
+## Create a producer
+### Start a docker container, setting 'HOST_IP' and 'ZK' variables
+```
+./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
+```
+
+### Launch the producer
+```
+$KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=`broker-list.sh`
+```
+
+### Send messages writing after the prompt `>` and pressing enter. The consumer will print the message
+```
+> hello
+>
+```
+
 
 ## Create a consumer
 ### Launch a docker container where the consumer will be executed
@@ -87,23 +105,6 @@ $KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=`br
 $KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=172.17.0.1:32768 --from-beginning
 ```
 
-
-## Create a producer
-### Start a docker container, setting 'HOST_IP' and 'ZK' variables
-```
-./start-kafka-shell.sh 172.17.0.1 172.17.0.1:2181
-```
-
-### Launch the producer
-```
-$KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=`broker-list.sh`
-```
-
-### Send messages writing after the prompt `>` and pressing enter. The consumer will print the message
-```
-> hello
->
-```
 
 ### Delete a topic
 ```
