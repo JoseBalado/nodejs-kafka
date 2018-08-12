@@ -50,11 +50,6 @@ docker-compose -f docker-3brokers.yml up
 echo $ZK
 ```
 
-### Now, inside this new running container, list all the topics
-```
-kafka-topics.sh --zookeeper $ZK --list
-```
-
 ### Show a lits of brokers. Note, if the script `start-kafka-shell.sh` is not passed the HOST_IP and ZK environment variables, only the ports are shown and this command will not work for consumer or producer: --bootstrap-server=\`broker-list.sh\`.
 ```
 broker-list.sh
@@ -64,13 +59,25 @@ broker-list.sh
 ## Create a new topic
 ### Inside the Docker container, create a topic with a replication factor of 3, this needs at least 3 Kafka brokers
 ```
-kafka-topics.sh --create --topic mytopic --partitions 4 --zookeeper $ZK --replication-factor 3
+kafka-topics.sh --create --topic mytopic --zookeeper $ZK --replication-factor 3
+```
+
+### Inside this new running container, list all the topics
+```
+kafka-topics.sh --zookeeper $ZK --list
 ```
 
 ### Show information about the topic 'mytopic'
 ```
-$KAFKA_HOME/bin/kafka-topics.sh --describe --topic mytopic --zookeeper $ZK
+$KAFKA_HOME/bin/kafka-topics.sh --topic mytopic --zookeeper $ZK  --describe 
 ```
+
+### Show information about all the topics
+```
+$KAFKA_HOME/bin/kafka-topics.sh --zookeeper $ZK --describe 
+```
+
+
 ## Create a producer
 ### Start a docker container, setting 'HOST_IP' and 'ZK' variables
 ```
