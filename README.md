@@ -69,7 +69,7 @@ kafka-topics.sh --zookeeper $ZK --list
 
 ### Show information about the topic 'mytopic'
 ```
-$KAFKA_HOME/bin/kafka-topics.sh --topic mytopic --zookeeper $ZK  --describe 
+$KAFKA_HOME/bin/kafka-topics.sh --zookeeper $ZK  --describe --topic mytopic
 ```
 
 ### Show information about all the topics
@@ -86,7 +86,7 @@ $KAFKA_HOME/bin/kafka-topics.sh --zookeeper $ZK --describe
 
 ### Launch the producer
 ```
-$KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=`broker-list.sh`
+$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list=`broker-list.sh` --topic=mytopic
 ```
 
 ### Send messages writing after the prompt `>` and pressing enter. The consumer will print the message
@@ -104,12 +104,12 @@ $KAFKA_HOME/bin/kafka-console-producer.sh --topic=mytopic --broker-list=`broker-
 
 ### Now, inside the Docker container, launch a consumer
 ```
-$KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=`broker-list.sh` --from-beginning
+$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server=`broker-list.sh` --from-beginning --topic=mytopic
 ```
 
 ### or use the IP and Port of one the brokers shown by 'broker-list.sh' command pass directly the result of 'broker-list.sh'
 ```
-$KAFKA_HOME/bin/kafka-console-consumer.sh --topic=mytopic --bootstrap-server=172.17.0.1:32768 --from-beginning
+$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server=172.17.0.1:32768 --from-beginning --topic=mytopic
 ```
 
 
