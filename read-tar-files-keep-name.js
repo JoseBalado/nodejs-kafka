@@ -1,7 +1,7 @@
 const Kafka = require('node-rdkafka')
+const fs = require('fs');
 
-const topicName = 'mywings-01'
-
+const topicName = 'log-tar-files'
 const stream = Kafka.Producer.createWriteStream({
   'debug' : 'all',
   //'metadata.broker.list': '172.17.0.1:9092', // only one Kafka broker
@@ -36,15 +36,36 @@ stream.producer.on('ready', (value1, value2) => {
   })
 })
 
-const maxMessages = 10
-for (var i = 0; i < maxMessages; i++) {
-  const value = Buffer.from(`{"previousURL":"^","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-06-19T12:38:0${i}TZ-2"}`)
-  stream.write(value);
-}
+
+// Store file data chunks in this array
+const chunks = [];
+
+// Read file into stream.Readable
+const fileStream = fs.createReadStream('logs/TravelService_faff39a6-dcbd-4a5c-b7a0-689990ff8f04_QS_20180330062501_frontend-stats.tar.gz')
+
+// An error occurred with the stream
+fileStream.once('error', (err) => {
+  // Be sure to handle this properly!
+  console.error(err)
+})
+
+// Data is flushed from fileStream in chunks,
+// this callback will be executed for each chunk
+fileStream.on('data', (chunk) => {
+  chunks.push(chunk); // push data chunk to array
+  // We can perform actions on the partial data we have so far!
+})
+
+// File is done being read
+fileStream.once('end', () => {
+  // create the final data Buffer from data chunks;
+  stream.write(Buffer.concat(chunks))
+  // Of course, you can do anything else you need to here, like emit an event!
+})
 
 stream.on('error', function (err) {
   // Here's where we'll know if something went wrong sending to Kafka
   console.error('Error in our kafka stream')
-  console.error(err)
+  console.error(err);
 })
 
