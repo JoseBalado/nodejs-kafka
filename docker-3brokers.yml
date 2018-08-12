@@ -13,7 +13,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_PORT: 32768
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_LOG_RETENTION_HOURS: -1 # Retain all topics forever, hours
       KAFKA_LOG_RETENTION_BYTES: -1 # Retain all topics forever, bytes
       KAFKA_log_SEGMENT_BYTES: 134217728 # Here 8 times less for testing purposes
@@ -29,7 +29,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_PORT: 32769
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_LOG_RETENTION_HOURS: -1 # Retain all topics forever, hours
       KAFKA_LOG_RETENTION_BYTES: -1 # Retain all topics forever, bytes
       KAFKA_log_SEGMENT_BYTES: 134217728 # Here 8 times less for testing purposes
@@ -45,7 +45,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_PORT: 32770
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_LOG_RETENTION_HOURS: -1 # Retain all topics forever, hours
       KAFKA_LOG_RETENTION_BYTES: -1 # Retain all topics forever, bytes
       KAFKA_log_SEGMENT_BYTES: 134217728 # Here 8 times less for testing purposes
