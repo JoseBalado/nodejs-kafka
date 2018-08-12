@@ -64,17 +64,6 @@ fileStream.once('end', () => {
   // Of course, you can do anything else you need to here, like emit an event!
 })
 
-//readStream.on('data', data => {
-//  console.log('Got message')
-//  writeStream.write(Buffer.from(data.toString().replace(/TZ[+-][0-9]{0,2}/g, "000Z")))
-//})
-
-//const maxMessages = 10
-//for (var i = 0; i < maxMessages; i++) {
-//  const value = new Buffer.from(`{"previousURL":"^","currentURL":"/wireless","currentParams":{},"timeStamp":"2018-06-19T12:38:0${i}.TZ-2"}`)
-//  stream.write(value)
-//}
-
 stream.on('error', function (err) {
   // Here's where we'll know if something went wrong sending to Kafka
   console.error('Error in our kafka stream')
