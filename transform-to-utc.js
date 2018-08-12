@@ -60,7 +60,7 @@ readStream.on('error', function(err) {
 
 readStream.on('data', data => {
   console.log('Got message')
-  writeStream.write(Buffer.from(data.toString().replace(/TZ[+-][0-9]{0,2}/g, "000Z")))
+  writeStream.write(Buffer.from(data.toString().replace(/TZ[+-][0-9]{0,2}/g, ".000Z")))
 })
 
 /* this is equivalent to `stream.on('data', data =>`
